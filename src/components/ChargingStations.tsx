@@ -11,9 +11,6 @@ import {
   Bar,
   LineChart,
   Line,
-  PieChart,
-  Pie,
-  Cell,
   CartesianGrid,
   XAxis,
   YAxis,
@@ -803,7 +800,7 @@ const ChargingStations: React.FC = () => {
                         const totalEnergy = parsedData[parsedData.length - 1]?.energy - parsedData[0]?.energy;
                         
                         // Energy for bar chart (convert to kWh)
-                        const energyData = parsedData.slice(-8).map((d, i) => ({
+                        const energyData = parsedData.slice(-8).map((d) => ({
                           name: d.timestamp,
                           energy: (d.energy / 1000).toFixed(2)
                         }));
