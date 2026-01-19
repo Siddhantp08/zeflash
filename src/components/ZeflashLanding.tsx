@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Zap, Zap as Bolt, Play, CheckCircle, Microscope, Cpu, Battery, Download, Store } from 'lucide-react';
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import { SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 
 const SectionLink: React.FC<{ href: string; label: string; active?: boolean }> = ({ href, label, active }) => (
   <a
