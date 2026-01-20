@@ -17,18 +17,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const path = (req.query.path as string) || '';
     const url = `${ML_BACKEND_URL}${path}`;
 
-    const response = await fetch(url, {
+    console.log('Proxying request:', req.method, url);
+    console.log('Request body:', req.body);
+
+    const fetchOptions: RequestInit = {
       method: req.method,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: req.method !== 'GET' ? JSON.stringify(req.body) : undefined,
-    });
+    };
 
+    // Add body for POST requests
+    if (req.method === 'POST' && req.body) {
+      fetchOptions.body = JSON.stringify(req.body);
+    }
+
+    const response = await fetch(url, fetchOptions);
+    
+    console.log('Backend response status:', response.status);
+    
     const data = await response.json();
+    console.log('Backend response data:', data);
+    
     return res.status(response.status).json(data);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Proxy error:', error);
-    return res.status(500).json({ error: 'Failed to reach backend' });
+    return res.status(500).json({ 
+      error: 'Failed to reach backend',
+      details: error.message 
+    });
   }
 }
