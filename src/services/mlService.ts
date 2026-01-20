@@ -37,7 +37,11 @@ export interface JobStatus {
  * Trigger ML inference for battery health analysis
  */
 export async function triggerInference(request: InferenceRequest): Promise<InferenceResponse> {
-  const response = await fetch(`${ML_API_URL}/api/v1/inference/trigger`, {
+  const url = ML_API_URL.startsWith('/api/ml-proxy') 
+    ? `${ML_API_URL}?path=/api/v1/inference/trigger`
+    : `${ML_API_URL}/api/v1/inference/trigger`;
+    
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -56,7 +60,11 @@ export async function triggerInference(request: InferenceRequest): Promise<Infer
  * Get the status of an ML inference job
  */
 export async function getJobStatus(jobId: string): Promise<JobStatus> {
-  const response = await fetch(`${ML_API_URL}/api/v1/inference/status/${jobId}`);
+  const url = ML_API_URL.startsWith('/api/ml-proxy')
+    ? `${ML_API_URL}?path=/api/v1/inference/status/${jobId}`
+    : `${ML_API_URL}/api/v1/inference/status/${jobId}`;
+    
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(`Failed to get job status: ${response.statusText}`);
@@ -69,7 +77,11 @@ export async function getJobStatus(jobId: string): Promise<JobStatus> {
  * Get the result of a completed ML inference job
  */
 export async function getJobResult(jobId: string): Promise<any> {
-  const response = await fetch(`${ML_API_URL}/api/v1/inference/result/${jobId}`);
+  const url = ML_API_URL.startsWith('/api/ml-proxy')
+    ? `${ML_API_URL}?path=/api/v1/inference/result/${jobId}`
+    : `${ML_API_URL}/api/v1/inference/result/${jobId}`;
+    
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(`Failed to get job result: ${response.statusText}`);
