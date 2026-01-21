@@ -43,6 +43,7 @@ export async function triggerInference(request: InferenceRequest): Promise<Infer
     body: JSON.stringify(request),
   });
 
+
   if (!response.ok) {
     throw new Error(`Failed to trigger inference: ${response.statusText}`);
   }
@@ -54,7 +55,7 @@ export async function triggerInference(request: InferenceRequest): Promise<Infer
  * Get the status of an ML inference job
  */
 export async function getJobStatus(jobId: string): Promise<JobStatus> {
-  const response = await fetch(`${ML_API_URL}/api/v1/inference/status/${jobId}`);
+  const response = await fetch(`${ML_API_URL}?path=/api/v1/inference/status/${jobId}`);
 
   if (!response.ok) {
     throw new Error(`Failed to get job status: ${response.statusText}`);
@@ -67,7 +68,7 @@ export async function getJobStatus(jobId: string): Promise<JobStatus> {
  * Get the result of a completed ML inference job
  */
 export async function getJobResult(jobId: string): Promise<any> {
-  const response = await fetch(`${ML_API_URL}/api/v1/inference/result/${jobId}`);
+  const response = await fetch(`${ML_API_URL}?path=/api/v1/inference/result/${jobId}`);
 
   if (!response.ok) {
     throw new Error(`Failed to get job result: ${response.statusText}`);
