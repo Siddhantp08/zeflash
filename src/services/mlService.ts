@@ -35,7 +35,7 @@ export interface JobStatus {
  * Trigger ML inference for battery health analysis
  */
 export async function triggerInference(request: InferenceRequest): Promise<InferenceResponse> {
-  const response = await fetch(`${ML_API_URL}/api/v1/inference/trigger`, {
+  const response = await fetch(`${ML_API_URL}?path=/api/v1/inference/trigger`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
