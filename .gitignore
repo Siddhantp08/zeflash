@@ -29,6 +29,8 @@ dist-ssr
 .env.development.local
 .env.test.local
 .env.production.local
+**/.env
+**/battery-ml-lambda/.env
 .vercel
 
 # Android signing keys (DO NOT COMMIT!)
